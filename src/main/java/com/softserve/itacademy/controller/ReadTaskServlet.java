@@ -24,10 +24,17 @@ public class ReadTaskServlet extends HttpServlet {
         String idStr = request.getParameter("id");
         if (idStr != null) {
             Task task = taskRepository.read(Integer.parseInt(idStr));
-            request.setAttribute("task", task);
-            request.getRequestDispatcher("/WEB-INF/pages/read-task.jsp").forward(request, response);
+            if (task != null) {
+                request.setAttribute("task", task);
+                request.getRequestDispatcher("/WEB-INF/pages/read-task.jsp").forward(request, response);
+            } else {
+                request.setAttribute("error-code", "404");
+                request.setAttribute("task-id", idStr);
+                request.setAttribute("from-url", "/read-task");
+                getServletContext().getRequestDispatcher("/error-page").forward(request, response);
+            }
         } else {
-            response.sendError(404, "Not Found");
+            response.sendError(400, "Bad Request");
         }
     }
 }
