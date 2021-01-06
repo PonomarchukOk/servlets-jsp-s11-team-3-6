@@ -26,11 +26,11 @@ public class CreateTaskServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        taskRepository.create(new Task(
+        if (taskRepository.create(new Task(
                 request.getParameter("name"),
                 Priority.valueOf(request.getParameter("priority").toUpperCase())
-        ));
-        request.setAttribute("message", "Task successfully created.");
+        ))) request.setAttribute("message", "Task successfully created.");
+        else request.setAttribute("message", "Task with given name already exists!");
         request.getRequestDispatcher("/WEB-INF/pages/create-task.jsp").forward(request, response);
     }
 }
