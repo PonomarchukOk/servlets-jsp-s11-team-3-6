@@ -31,7 +31,7 @@
         <td><%= task.getPriority() %></td>
         <td><a href="${pageContext.request.contextPath}/read-task?id=<%= task.getId() %>">Read</a></td>
         <td><a href="${pageContext.request.contextPath}/edit-task?id=<%= task.getId() %>">Edit</a></td>
-        <td><a href="${pageContext.request.contextPath}/delete-task?id=<%= task.getId() %>">Delete</a></td>
+        <td><a onclick="return confirm('Are you sure you want to delete task <%= task.getTitle() %> ? ')" href="${pageContext.request.contextPath}/delete-task?id=<%= task.getId() %>">Delete</a></td>
     </tr>
 <% } %></tbody>
 </table>
